@@ -1,0 +1,8 @@
+# Objects
+*.o
+
+# Binaries
+average_plots
+
+# Test outputs
+*.dat

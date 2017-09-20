@@ -1,0 +1,20 @@
+FC=gfortran
+
+PROGNAME=average_plots
+OBJECTS=average_plots.o version.o
+
+compile:$(OBJECTS)
+	$(FC) $(OBJECTS) -o $(PROGNAME)
+
+%.o:%.f90
+	$(FC) -c $<
+
+.PHONY:version.f90
+version.f90:
+	./get_git_version.sh
+
+clean:
+	rm -v $(OBJECTS) $(PROGNAME)
+
+test:
+	cd tests; make

@@ -1,0 +1,10 @@
+SHELL=/bin/bash
+
+PROGFOLDER=../
+PROGNAME=average_plots
+
+test:$(PROGFOLDER)/$(PROGNAME) file1.dat file2.dat 
+	$(PROGFOLDER)/$(PROGNAME) file* > avplot.dat
+
+%.dat:
+	for (( i=1; i<=100; i++ )); do echo $$i $$RANDOM; done > $@

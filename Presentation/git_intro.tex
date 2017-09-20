@@ -1,0 +1,573 @@
+% Version 1: first release 50-60min
+% Version 2: cut..
+
+
+\documentclass[xcolor=dvipsnames,10pt]{beamer}
+% \usepackage[english]{babel}
+\usepackage[T1]{fontenc}
+% \usepackage[sfdefault]{cabin}
+% \usepackage[T1]{fontenc}
+% \usepackage[LY1]{fontenc}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{comment}
+\usepackage{xfrac}
+\usepackage{cancel}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+%Nice diagrams
+\usepackage{tikz}
+\usetikzlibrary{calc,trees,positioning,arrows,chains,shapes.geometric,%
+    decorations.pathreplacing,decorations.pathmorphing,shapes,%
+    matrix,shapes.symbols,%
+    mindmap% Crear mapas como el de la intro
+    }
+\tikzset{
+	%Define standard arrow tip
+	>=stealth',
+	%Define style for different line styles
+	help lines/.style={dashed, thick},
+	axis/.style={<->},
+	important line/.style={thick},
+	connection/.style={thick, dotted},
+}
+
+\hypersetup{
+  linkcolor=black,
+  urlcolor=blue,
+  pdffitwindow=true,
+  pdfnewwindow=true,
+  linktoc=all,
+%   hidelinks=false,
+  colorlinks=true
+}
+
+% Opciones para "usetheme"
+% pagetype: nombre de para las páginas en la parte inferior (p.ej. Página, Page)
+% pageofpages: de/of/etc...
+%
+% logo: logotipo de la parte superior de la portada, y en la inferior de los frames.
+%
+% titleimg: imagen de la portada; proporciones 1410x438
+\usetheme[pagetype=Page, pageofpages=of, logo=img/umu, titleimg=img/title] {UMU}
+\usecolortheme{UMU}
+
+
+% Para páginas off-topic, no incluidas en el número de páginas de la presentación
+\newcommand{\beginbackup}{
+   \newcounter{framenumbervorappendix}
+   \setcounter{framenumbervorappendix}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+   \addtocounter{framenumbervorappendix}{-\value{framenumber}}
+   \addtocounter{framenumber}{\value{framenumbervorappendix}} 
+}
+\newcommand{\textttb}[1]{{\color{blue!50!black} \texttt{#1}}}
+
+% Fuentes: El tema original usa la Nexus Serif y la Nexus Sans, ambas de pago, por lo que 
+%          recomiendo comentar/editar estas líneas y/o usar otras fuentes.
+% \renewcommand{\rmdefault}{NexusSerifPro}
+% \renewcommand{\sfdefault}{NexusSansPro}
+
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{colortbl}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%DEFINICIONES DE COLORES
+% Texto en segundo plano
+\definecolor{gris}{rgb}{0.5,0.5,0.5}
+\definecolor{gris2}{rgb}{0.8,0.8,0.8}
+\definecolor{gris_oscuro}{rgb}{0.3,0.3,0.3}
+% Texto en primer plano (defecto)
+\definecolor{negro}{rgb}{0.0,0.0,0.0}
+% Chapucilla
+\definecolor{blanco}{rgb}{1.0,1.0,1.0}
+% 
+\definecolor{verde}{rgb}{0.0,1.0,0.0}
+%
+\definecolor{verde2}{rgb}{0.0,0.5,0.0}
+% 
+\definecolor{rojo}{rgb}{1.0,0.0,0.0}
+%
+\definecolor{violeta}{rgb}{0.5,0.0,1.0}
+%
+\definecolor{naranja}{rgb}{1.0,0.5,0.0}
+% 
+\definecolor{azul}{rgb}{0.0,0.0,1.0}
+% 
+\definecolor{azul2}{rgb}{0.4,0.6,1.0}
+%Más
+\definecolor{BlueViolet}{rgb}{0.5,0.0,0.6}
+
+
+\newenvironment{annot}{\begin{block}{}}{\end{block}}
+
+% Mostrar esquema de contenidos antes de cada sección; descomentar para activar.
+%\AtBeginSection[]{
+%	\begin{frame}<beamer>
+%		\frametitle{Contenidos}
+%		
+%		\small
+%		\raggedcolumns
+%		\begin{multicols}{2}
+%			\tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/show/shaded]
+%		\end{multicols}
+%	
+%	\end{frame}
+%}
+
+% Opciones para dibujo con tikz
+\tikzstyle{sqr} = [draw, thin, fill=blue!20, minimum height=1.6em]
+\tikzstyle{elp} = [ellipse, draw, thin, fill=green!20, minimum height=1.6em]
+\tikzstyle{rsqr} = [draw, thin, fill=red!20, minimum height=1.6em]
+\tikzstyle{relp} = [ellipse, draw, thin, fill=red!20, minimum height=1.6em]
+
+% Definir opciones: tema, título, fecha, etc
+\title[Intro to git]{\textbf{Short introduction to git}}
+% \subtitle{\vspace*{-0.2cm} An {\itshape express} introduction to GROMACS}
+\author{Javier Cerezo Bastida}
+\institute{}
+\date{Javier Cerezo Bastida\\\vspace*{0.2cm}\today} %September 2017}
+\tema{}
+
+\setbeamertemplate{section in toc}[circle]
+\setbeamertemplate{subsection in toc}[square]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+\begin{document}
+
+\newcommand{\wpl}{$\omega^{+}$}
+\newcommand{\wm}{$\omega^{-}$}
+\newcommand{\cis}{\textit{cis}}
+\newcommand{\trans}{\textit{trans}}
+\newcommand{\alltrans}{\textit{all-trans}}
+\newcommand{\monocis}{\textit{monocis}}
+\newcommand{\dicis}{\textit{dicis}}
+
+\begin{frame}[t,plain]
+  \titlepage
+\end{frame}
+
+% \section*{Contents}
+% \begin{frame}[c]
+%   \frametitle{Contents}
+%   \small
+%   \tableofcontents
+%   
+% \end{frame}
+
+\section{Motivation}
+\begin{frame}
+ \frametitle{Why using git?}
+ 
+ ``Old school'' version management might be, somehow, not so efficient:
+ 
+ \begin{center}
+ \includegraphics[width=6cm]{figures/why_git.png}  
+ \end{center}
+ 
+ \pause
+ 
+ If the above folder organisation is not unfamiliar to you and/or:
+ 
+ \begin{itemize}
+  \item you want to keep traceability of your work
+  \item \textbf{you work with other people}
+ \end{itemize}
+
+\vspace*{0.3cm}
+ 
+ \begin{center}
+ \begin{minipage}{0.2\textwidth}
+  \includegraphics[width=2cm]{figures/Git-Logo-2Color.png}  
+ \end{minipage}
+  \begin{minipage}{0.7\textwidth}
+ can make your life (much) easier
+  \end{minipage}
+ \end{center}
+  
+\end{frame}
+
+\section{Basics}
+\begin{frame}
+ \frametitle{What is git?}
+ 
+ \begin{minipage}{1.0\textwidth}
+  ``Git is a free and open source \textbf{distributed version control system} designed to handle everything from small to very large projects with speed and efficiency.''
+ \end{minipage}
+ \vspace*{0.4cm}
+ 
+ \pause
+ 
+ In practice, we add a new layer to our folder organisation (actually 2 layers):
+ 
+ \begin{center}
+ \includegraphics[width=6.5cm]{figures/gitless_world.png}\\
+ \includegraphics[width=6.5cm]{figures/gitless_world_simil.png}  
+ \end{center}
+ 
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addtocounter{framenumber}{-1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{What is git?}
+ 
+ \begin{minipage}{1.0\textwidth}
+  ``Git is a free and open source \textbf{distributed version control system} designed to handle everything from small to very large projects with speed and efficiency.''
+ \end{minipage}
+ \vspace*{0.4cm}
+ 
+ In practice, we add a new layer to our folder organisation (actually 2 layers):
+ 
+ \begin{center}
+ \includegraphics[width=6.5cm]{figures/git_world.png}\\
+ \includegraphics[width=6.5cm]{figures/gitless_world_simil.png}  
+ \end{center}
+ 
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addtocounter{framenumber}{-1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{What is git?}
+ 
+ \begin{minipage}{1.0\textwidth}
+  ``Git is a free and open source \textbf{distributed version control system} designed to handle everything from small to very large projects with speed and efficiency.''
+ \end{minipage}
+ \vspace*{0.4cm}
+ 
+ In practice, we add a new layer to our folder organisation (actually 2 layers):
+ 
+ \begin{center}
+ \includegraphics[width=6.5cm]{figures/git_world.png}\\
+ \includegraphics[width=6.5cm]{figures/git_world_simil.png}  
+ \end{center}
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{What is git?}
+ 
+ Git is the set of tools that are used to manage such layers
+  \vspace*{0.4cm}
+ 
+ \begin{center}
+ \includegraphics[width=6.5cm]{figures/move_on_git_world.png}
+ \end{center}
+ 
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addtocounter{framenumber}{-1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{What is git?}
+ 
+ Git is the set of tools that are used to manage such layers
+  \vspace*{0.4cm}
+ 
+ \begin{center}
+ \includegraphics[width=6.5cm]{figures/move_on_git_world1.png}
+ \end{center}
+ 
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addtocounter{framenumber}{-1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{What is git?}
+ 
+ Git is the set of tools that are used to manage such layers
+  \vspace*{0.4cm}
+ 
+ \begin{center}
+ \includegraphics[width=6.5cm]{figures/move_on_git_world2.png}
+ \end{center}
+ 
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addtocounter{framenumber}{-1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{What is git?}
+ 
+ Git is the set of tools that are used to manage such layers
+  \vspace*{0.4cm}
+ 
+ \begin{center}
+ \includegraphics[width=6.5cm]{figures/move_on_git_world3.png}
+ \end{center}
+ 
+\end{frame}
+
+
+\begin{frame}
+ \frametitle{How does it works?}
+
+\begin{itemize}
+ \item All info about ``staging area'' and ``repository'' is stored in a folder on our working directory: {\color{blue}\texttt{.git/}}
+ \vspace*{0.3cm}
+ 
+ \item All tools are called in a similar way:
+  \vspace*{0.1cm}
+
+  \texttt{\$> {\color{blue}git toolname [options]}}
+  \vspace*{0.2cm}
+  
+  \begin{itemize}
+   \item Initiate a git repository on a folder (i.e., creates \texttt{.git/}):
+   
+   \texttt{git init}
+   \vspace*{0.1cm}
+   
+   \item Add a file to the staging area:
+   
+   \texttt{git add filename}
+   \vspace*{0.1cm}
+   
+   \item Write content from staging area to the repository:
+   
+   \texttt{git commit -m "Message explaining the changes"}
+  
+  \end{itemize}
+  
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{Basic workflow}
+ 
+ \begin{enumerate}
+  \item Make changes to the code  (\texttt{mycode.f90})
+  \vspace*{0.2cm}
+  
+  \item Add them the the staging area: 
+  
+  \texttt{git add mycode.f90}
+  \vspace*{0.2cm}
+  
+  \item Commit changes locally:
+  
+  \texttt{git commit -m "Bug X was fixed"}
+  \vspace*{0.2cm}
+  
+  \item Add them to the remote repository:
+  
+  \texttt{git push}
+     \vspace*{0.2cm}
+  
+  \color{white}
+  \item[] Before uploading, get current status of the remote repository:
+  
+  \texttt{git pull}
+ \end{enumerate}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addtocounter{framenumber}{-1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{Basic workflow}
+ 
+ \begin{enumerate}
+  \item Make changes to the code (\texttt{mycode.f90})
+  \vspace*{0.2cm}
+  
+  \item Add them the the staging area: 
+  
+  \texttt{git add mycode.f90} 
+  \vspace*{0.2cm}
+  
+  \item Commit changes locally:
+  
+  \texttt{git commit -m "Bug X was fixed"}
+  \vspace*{0.2cm}
+  
+  {
+  \color{blue}
+  \item[*] Before uploading, get current status of the remote repository:
+  
+  \texttt{git pull}
+  }
+  \vspace*{0.2cm}
+  
+%   \addtocounter{enumi}{-1}
+  
+  \item Add them to the remote repository:
+  
+  \texttt{git push}
+ \end{enumerate}
+
+\end{frame}
+
+
+
+\begin{frame}
+ \frametitle{Regarding history (with only 1 branch)}
+ 
+ \begin{itemize}
+  \item All objects (commits) in git have associated a unique ID (hash), e.g. \texttt{d6cd1e2bd19e03a81132a23b2025920577f84e37}
+  \vspace*{0.2cm}
+  
+  \item Changes in history should be avoided, even more in collaborative projects
+  \vspace*{0.2cm}
+  
+  \item The history can be examined with:
+  
+  \texttt{git log -{}-oneline -{}-decorate -{}-graph} (or with gui as \texttt{gitg}) 
+  \begin{center}
+   \includegraphics[width=11cm]{figures/log.png}
+  \end{center}
+
+  
+  
+ \end{itemize}
+
+ 
+\end{frame}
+
+
+\begin{frame}
+ \frametitle{Travelling along history}
+ 
+ \begin{itemize}
+ 
+  \item Branch history line is linear (with some bifurcations if collaborative):
+  
+  \includegraphics[width=5.5cm]{figures/history.png}
+  \vspace*{0.2cm}
+  
+  \item Many ways to come back to the past: workdir and/or repository(history).\\
+  E.g., shifting to old commit d6cd1e2:
+  \vspace*{0.2cm}
+  
+  \begin{minipage}{1.1\textwidth}
+  \begin{itemize}
+   \item Change workdir to commit \texttt{d6cd1e2} (but leave history untouched):\\
+   \texttt{git checkout d6cd1e2}
+   \vspace*{0.2cm}
+   
+   \item Shift history to commit \texttt{d6cd1e2}, (but leave workdir untouched):\\
+   \texttt{git reset d6cd1e2}
+   \vspace*{0.2cm}
+   
+   \item Reset history and workdir to commit \texttt{d6cd1e2} ({\color{red}\textbf{work is lost}}):\\
+   \texttt{git reset d6cd1e2 -{}-hard}
+  \end{itemize}
+  \end{minipage}
+  
+ \end{itemize}
+
+ 
+\end{frame}
+
+
+\begin{frame}
+ \frametitle{Configuration and remote servers}
+ 
+ \begin{itemize}
+  \item Git identifies users by name and e-mail
+  
+  \texttt{git config -{}-global user.email "john@uni.edu"}
+  
+  \texttt{git config -{}-global user.name "John Doe"}
+  \vspace*{0.3cm}
+  
+  \item Starting a repository
+  
+  \texttt{git init} (on a local machine)
+  
+  \texttt{git init -{}-bare -{}-shared} (on a remote server)
+  \vspace*{0.3cm}
+  
+  \begin{minipage}{1.1\textwidth}
+  \item Accessing a remote server with protocols: local, ssh, http (no further config)
+  
+  \texttt{git remote add {\color{blue}cluster} ssh://john@cluster:\textasciitilde/Repos/MyWork.git}
+  
+  \texttt{git remote add {\color{blue}github} https://github.com/john/MyWork.git}
+  \end{minipage}
+  \vspace*{0.3cm}
+  
+  \item Sending/getting commit history to/from remote
+  
+  \texttt{git push {\color{blue}cluster}} (send)
+  
+  \texttt{git pull {\color{blue}cluster}} (receive)
+  \vspace*{0.3cm}
+  
+  \item Clone from a remote repository
+  
+  \texttt{git clone john@cluster:\textasciitilde/Repos/MyWork.git}
+  
+ \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{What is github?}
+ 
+ ``GitHub is a web-based Git repository and Internet \textbf{hosting service}''
+ \vspace*{0.8cm}
+ 
+ \begin{itemize}
+  \item Remote server with graphical interface
+  \vspace*{0.3cm}
+ 
+  \item Host unlimited number of open-source projects for free
+   \vspace*{0.3cm}
+   
+  \item Additional features on top of git
+  \vspace*{0.2cm}
+  
+  \begin{itemize}
+   \item \textbf{Forks}: get a copy of a project on github into your account
+   \vspace*{0.1cm}
+   
+   \item \textbf{Pull requests}: ask a developer to apply your changes into his project
+  \end{itemize}
+ \vspace*{0.5cm}
+  
+ \end{itemize}
+ 
+ Similar GUI can be mounted on a cluster: gitlab and gogs
+
+ 
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addtocounter{framenumber}{-1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}[t,plain]
+  \titlepage
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BACK UP
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \addtocounter{framenumber}{-1}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% \begin{frame}[c]
+%   \frametitle{Perspectives}
+% %   \framesubtitle{Spectra simulation at Harmonic Approximation: vibrational structure}
+% 
+% 
+% \end{frame}
+
+
+\end{document}

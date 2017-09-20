@@ -1,0 +1,16 @@
+FC=gfortran
+
+PROGNAME=average_plots
+OBJECTS=average_plots.o
+
+compile:$(OBJECTS)
+	$(FC) $(OBJECTS) -o $(PROGNAME)
+
+%.o:%.f90
+	$(FC) -c $<
+
+clean:
+	rm -v $(OBJECTS) $(PROGNAME)
+
+test:
+	cd tests; make

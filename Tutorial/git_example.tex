@@ -1,0 +1,666 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage[T1]{fontenc}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+
+\usepackage{listings}
+\usepackage{color}
+\usepackage{xcolor}
+
+ 
+\lstdefinestyle{Alice}{
+%   language=bash,
+%   firstline=2,% Supress the first line that begins with `%`
+  basicstyle=\small\sffamily,
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=3pt,
+  frame=tb,
+  columns=fullflexible,
+  backgroundcolor=\color{yellow!20},
+  linewidth=0.9\linewidth,
+  xleftmargin=0.1\linewidth
+}
+\lstdefinestyle{AliceFake}{
+%   language=bash,
+%   firstline=2,% Supress the first line that begins with `%`
+  escapechar=\%,
+  basicstyle=\small\sffamily\color{black!70},,
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=3pt,
+  frame=tb,
+  columns=fullflexible,
+  backgroundcolor=\color{yellow!10},
+  rulecolor=\color{black!50},
+  linewidth=0.9\linewidth,
+  xleftmargin=0.1\linewidth
+}
+\lstdefinestyle{Bob}{
+%   language=bash,
+%   firstline=2,% Supress the first line that begins with `%`
+  basicstyle=\small\sffamily,
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=3pt,
+  frame=tb,
+  columns=fullflexible,
+  backgroundcolor=\color{red!20},
+  linewidth=0.9\linewidth,
+  xleftmargin=0.1\linewidth
+}
+\lstdefinestyle{BobFake}{
+%   language=bash,
+%   firstline=2,% Supress the first line that begins with `%`
+  escapechar=\%,
+  basicstyle=\small\sffamily\color{black!70},
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=3pt,
+  frame=tb,
+  columns=fullflexible,
+  backgroundcolor=\color{red!10},
+  rulecolor=\color{black!50},
+  linewidth=0.9\linewidth,
+  xleftmargin=0.1\linewidth
+}
+\lstdefinestyle{Remote}{
+%   language=bash,
+%   firstline=2,% Supress the first line that begins with `%`
+  basicstyle=\small\sffamily,
+  numbers=left,
+  numberstyle=\tiny,
+  numbersep=3pt,
+  frame=tb,
+  columns=fullflexible,
+  backgroundcolor=\color{blue!20},
+  linewidth=0.9\linewidth,
+  xleftmargin=0.1\linewidth
+}
+\lstdefinestyle{Text}{
+%   language=bash,
+%   firstline=2,% Supress the first line that begins with `%`
+  escapechar=\%,
+  basicstyle=\small\ttfamily,
+  numbers=none,
+  numberstyle=\tiny,
+  numbersep=3pt,
+  frame=tbrl,
+  columns=fullflexible,
+  backgroundcolor=\color{white},
+  linewidth=0.9\linewidth,
+  xleftmargin=0.1\linewidth,
+  keepspaces,
+  showstringspaces=false,
+  extendedchars=true
+}
+\lstdefinestyle{Output}{
+%   language=bash,
+%   firstline=2,% Supress the first line that begins with `%`
+  escapechar=\%,
+  basicstyle=\small\sffamily,
+  numbers=none,
+  numberstyle=\tiny,
+  numbersep=3pt,
+  frame=tb,
+  columns=fullflexible,
+  backgroundcolor=\color{white},
+  linewidth=0.9\linewidth,
+  xleftmargin=0.1\linewidth
+}
+
+% introduce new commands for version control
+\newcommand{\gitversion}{Untracked}
+\newcommand{\gitdate}{\today}
+% update the commands with git info only if version.tex was created
+\IfFileExists{version}{
+  \input{version}%
+}
+
+%opening
+\title{Example of a git workflow}
+\author{Javier Cerezo \\ 
+\small\textsc{Version}: \gitversion}
+\date{\gitdate}
+
+\begin{document}
+
+\maketitle
+
+This tutorial drives you through some common tasks that are involved when using git in a collaboration for a single-branch project. This file provides a script with all steps followed by two hypothetical users, Alice and Bob, who meet different scenarios when sharing a project (from initiating both local and remote repositories to merge issues). In order to deal with a \textit{close-to-real-world} case, we focus on a small Fortran90 code that carry our the average of different plots, using Makefiles to manage the compilation. All steps involving the generation of the actual code are replaced by a copy from a folder where all the files to be modified are already created, so that no knowledge about the language is needed (although it might be useful in order to understand the implications of the different steps) and the reader can easily focus on the issues related to the usage of the git commands.
+
+\section*{Colour code}
+The input commands are coloured according to the user/account where it is launched (Alice, Bob and Remote). Moreover, to stress that the code itself (program to average plots) is not the relevant part, all commands related to code generation are shaded off (which mainly correspond to \texttt{cp} calls).
+
+\begin{lstlisting}[style=Alice]
+ Alice
+\end{lstlisting}
+\begin{lstlisting}[style=AliceFake]
+ Alice (copy code)
+\end{lstlisting}
+\begin{lstlisting}[style=Bob]
+ Bob
+\end{lstlisting}
+\begin{lstlisting}[style=BobFake]
+ Bob (copy code)
+\end{lstlisting}
+\begin{lstlisting}[style=Remote]
+ Remote server
+\end{lstlisting}
+
+Other code-like entries correspond to:
+
+\begin{lstlisting}[style=Text]
+ Text file
+\end{lstlisting}
+\begin{lstlisting}[style=Output]
+ Output on screen
+\end{lstlisting}
+
+
+\clearpage
+
+\section{Starting a repository}
+
+Alice starts the project on a new folder:
+
+\begin{lstlisting}[style=Alice]
+ mkdir AveragePlots  
+ cd AveragePlots
+\end{lstlisting}
+
+And initiates a git repository on it:
+
+\begin{lstlisting}[style=Alice]
+ git init
+\end{lstlisting}
+
+This generates a folder named \texttt{.git/} that is used by git to store all the information about the version control. Since Alice wants to set her details only for this project, she sets the basic git attributes locally on the project folder:
+
+\begin{lstlisting}[style=Alice]
+ git config --local user.name "Alice"
+ git config --local user.email "alice@unial.it"
+\end{lstlisting}
+
+She is now ready to start the development, and generates the first version of the code:
+
+\begin{lstlisting}[style=AliceFake]
+ cp ../../DoneCode/average_plots_v0.f90 average_plots.f90
+\end{lstlisting}
+
+At this point, Alice adds the file to the staging area, and subsequently commits it,
+
+\begin{lstlisting}[style=Alice]
+ git add average_plots.f90
+ git commit
+\end{lstlisting}
+
+After typing \texttt{git commit}, a text editor is automatically opened (e.g. \texttt{vi}, it can be set to a different one with \texttt{git config}) so that we can write the commit message. The file is edited adding one short sentence in the first line (which provides a summary of the commit) and, optionally, further information in the lines below. This is the message added to the history (lines starting with \# are ignored).
+
+\begin{lstlisting}[style=Text,language=bash,commentstyle=\color{blue},linewidth=0.96\linewidth,xleftmargin=0.05\linewidth]
+%{\color{red!50!yellow!90!}Starting repository with first version of the code}%
+
+This is the first version of the program, but it
+is not well tested
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch  %{\color{magenta}master}%
+#
+# %{\color{magenta}Changes to be committed:}%
+#      %{\color{green}new file}{\color{blue}:}%   %{\color{red}average\_plots.f90}%
+#
+\end{lstlisting}
+
+\clearpage
+
+\section{Single user workflow}
+Alice decides to improve the project by adding a \texttt{Makefile} to manage the compilation,
+
+\begin{lstlisting}[style=AliceFake]
+ cp ../../DoneCode/Makefile1 Makefile
+\end{lstlisting}
+
+Before committing, it is a good practice to check that the code that we are going to submit works properly (compiles...), Alice checks that the code compiles:
+
+\begin{lstlisting}[style=AliceFake]
+ make
+\end{lstlisting}
+
+This has generated some objects files (\texttt{.o}) and the final binary (\texttt{average\_plots}), but these files should not enter in the repository (usually, one only wants text files to be tracked by the version control system). Alice checks which files in the working directory are changed or added with the following command,
+
+\begin{lstlisting}[style=Alice]
+ git status -s
+\end{lstlisting}
+which gives all the files that git ``sees'':
+
+\begin{lstlisting}[style=Output]
+%{\color{red}??}% Makefile
+%{\color{red}??}% average_plots
+%{\color{red}??}% average_plots.o
+\end{lstlisting}
+
+In order to tell \texttt{git} to ignore the compilation files, Alice creates the following \texttt{.gitignore} file:
+
+\begin{lstlisting}[style=Text,language=bash,commentstyle=\color{blue}]
+# Objects
+*.o
+
+# Binaries
+average_plots
+\end{lstlisting}
+
+Now, \texttt{git status -s} gives:
+
+\begin{lstlisting}[style=Output]
+%{\color{red}??}% .gitignore
+%{\color{red}??}% Makefile
+\end{lstlisting}
+
+Alice adds all documents that git sees with:
+
+\begin{lstlisting}[style=Alice]
+ git add -A
+\end{lstlisting}
+
+Then, she commits the changes, giving the commit summary at command line:
+
+\begin{lstlisting}[style=Alice]
+ git commit -m "Add Makefile for compilation"
+\end{lstlisting}
+
+\clearpage
+
+\section{Setting a remote repository}
+At the remote repository, a \textbf{bare} repository is created with:
+
+\begin{lstlisting}[style=Remote]
+ mkdir /home/git/AveragePlots.git 
+ cd /home/git/AveragePlots.git 
+ git init --bare --shared=group
+\end{lstlisting}
+with \texttt{-{}-bare}, we create a repository without working directory, and \texttt{-{}-shared} is used to properly set the folder permissions (for collaborative projects).
+
+Alice, adds the address of the repository in the remote server, and pushes the current branch of the local repository: 
+
+\begin{lstlisting}[style=Alice]
+ git remote add cluster alice@cluster.unial.it:/home/git/AveragePlots.git
+ git push cluster master --set-upstream 
+\end{lstlisting}
+with \texttt{-{}-set-upstream}, the remote server is set as the default place to push (and pull).
+
+Alice continues her project, and now adds a test folder:
+
+\begin{lstlisting}[style=AliceFake]
+ mkdir tests
+ cp ../../DoneCode/MakefileTest1 tests/Makefile
+\end{lstlisting}
+
+This test generates .dat files that Alice does not want to keep, so she updates the git file as:
+
+\begin{lstlisting}[style=Text,language=bash,commentstyle=\color{blue}]
+# Objects
+*.o
+
+# Binaries
+average_plots
+
+# Test dat file
+*.dat
+\end{lstlisting}
+
+Then, prepares and commits the changes,
+
+\begin{lstlisting}[style=Alice]
+ git add -A
+ git commit -m "Add test suite"
+\end{lstlisting}
+
+Finally, uploads the updated repository to the remote folder,
+
+\begin{lstlisting}[style=Alice]
+ git pull
+ git push
+\end{lstlisting}
+Note that first pulling before pushing is needed when many people can change the remote directory (in this case it is not needed, as Alice is working alone for the moment, but it is a good practice).
+
+\clearpage
+
+\section{Collaborating in a project}
+Bob wants to collaborate in Alice's project, so he clones the project into his folder and the sets his data. There are 3 different protocols that can be used to connect and clone an external repository: file://, ssh:// and http://. Sometimes, we can omit the protocol (git guesses it, although the behaviour may change slightly). Bob takes clones the remote repository typing:
+
+\begin{lstlisting}[style=Bob]
+ git clone bob@cluster.unial.it:/home/git/AveragePlots.git
+ cd AveragePlot
+ git config --local user.name "Bob"
+ git config --local user.email "bob@unibo.es"
+\end{lstlisting}
+
+Now he has taken both working directory and all the history from the remote repository. Note that when cloning a repository from a server, such remote is named \texttt{origin} and it is set as default to pull and push.
+
+He can now work on the project, and decides to modify the \texttt{Makefile}, so as to run the test from the root folder.
+
+\begin{lstlisting}[style=BobFake]
+ cp ../../DoneCode/Makefile2 Makefile
+\end{lstlisting}
+
+Then he prepares and commits the changes:
+
+\begin{lstlisting}[style=Bob]
+ git add -u
+ cd commit -m "Add 'make test' to Makefile at root folder"
+\end{lstlisting}
+(\texttt{-u} flag, only adds to the staging area the files that have been updated, not the new ones created)
+
+He then pushes his changes to the remote repository:
+
+\begin{lstlisting}[style=Bob]
+ git pull 
+ git push  
+\end{lstlisting}
+
+At the same time, Alice has been working on the code, adding a header to the program, i.e., modifying \texttt{average\_plots.f90},
+
+\begin{lstlisting}[style=AliceFake]
+ cp ../../DoneCode/average_plots_v1.f90 average_plots.f90
+\end{lstlisting}
+
+\begin{lstlisting}[style=Alice]
+ git add -u
+ cd commit -m "Add fancy header to the output of the program"
+\end{lstlisting}
+
+At this point, the history of Alice and Bob diverge. Moreover, since Bob committed before Alice, also Alice has a history that differs from the remote one, so she cannot push now and when pulling, this situation needs to be fixed. Fortunately, git can handle automatically most of this issues. In the case, for instance, Alice and Bob did the changes in different files and there is no conflict between their commits. When typing \texttt{git pull}, git downloads the repository from the remote folder, merges it with our local one and generates a commit,
+
+\begin{lstlisting}[style=Alice]
+ git pull
+\end{lstlisting}
+Since git is creating a commit, it launches the text editor as usual, inserting a default commit message:
+
+\begin{lstlisting}[style=Text,language=bash,commentstyle=\color{blue},linewidth=1.06\linewidth,xleftmargin=0.05\linewidth]
+%{\color{red!50!yellow!90!}Merge branch 'master' of cluster.unial.it:/home/git/AveragePlots}%
+
+# Please enter a commit message to explain why this merge is necessary,
+# especially if it merges an updated upstream into a topic branch.
+#
+# Lines starting with '#' will be ignored, and an empty message aborts
+# the commit.
+\end{lstlisting}
+
+Now, Alice can pull her history to the remote server, as it is now ahead it:
+
+\begin{lstlisting}[style=Alice]
+ git push
+\end{lstlisting}
+
+\subsection{Solving conflicts when merging}
+Both Bob and Alice decide to change the format of the header in the code, so they edit their file in the respective local folder. 
+% The original code reads,
+% 
+% \begin{lstlisting}[style=Text]
+%     write(0,*) "-------------------------------"
+%     write(0,*) "|                             |"
+%     write(0,*) "|  P L O T    A V E R A G E   |"
+%     write(0,*) "|                             |"
+%     write(0,*) "-------------------------------"
+%     write(0,*) ""
+% \end{lstlisting}
+
+Alice makes her edit as follows,
+
+\begin{lstlisting}[style=AliceFake]
+ cp ../../DoneCode/average_plots_v2A.f90 average_plots.f90
+\end{lstlisting}
+\begin{lstlisting}[style=Text]
+    write(0,*) "==============================="
+    write(0,*) "*                             *"
+    write(0,*) "*  P L O T    A V E R A G E   *"
+    write(0,*) "*                             *"
+    write(0,*) "==============================="
+    write(0,*) ""
+\end{lstlisting}
+
+Bob makes his edit as follows,
+\begin{lstlisting}[style=BobFake]
+ cp ../../DoneCode/average_plots_v2B.f90 average_plots.f90
+\end{lstlisting}
+\begin{lstlisting}[style=Text]
+    write(0,*) "///////////////////////////////"
+    write(0,*) "!                             !"
+    write(0,*) "!  P L O T    A V E R A G E   !"
+    write(0,*) "!                             !"
+    write(0,*) "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"
+    write(0,*) ""
+\end{lstlisting}
+
+Alice commit her changes and upload to the server
+
+\begin{lstlisting}[style=Alice]
+ git commit -a -m "Change header box format"
+ git pull
+ git push
+\end{lstlisting}
+(note that \texttt{git commit -a} is a shortcut of \texttt{git add -u} + \texttt{git commit -m "..."})
+
+Now Bob commit and tries to pull the history from the remote,
+
+\begin{lstlisting}[style=Bob]
+ git commit -a -m "Modify the aspect of the header"
+ git pull
+\end{lstlisting}
+and gets the following error:
+
+\begin{lstlisting}[style=Output]
+Auto-merging average_plots.f90
+CONFLICT (content): Merge conflict in average_plots.f90
+Automatic merge failed; fix conflicts and then commit the result.
+\end{lstlisting}
+
+Moreover, git has added some marks to the file \texttt{average\_plots.f90} in the place where the conflict appeared:
+
+\begin{lstlisting}[style=Text]
+<<<<<<< HEAD
+    write(0,*) "///////////////////////////////"
+    write(0,*) "!                             !"
+    write(0,*) "!  P L O T    A V E R A G E   !"
+    write(0,*) "!                             !"
+    write(0,*) "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"
+=======
+    write(0,*) "==============================="
+    write(0,*) "*                             *"
+    write(0,*) "*  P L O T    A V E R A G E   *"
+    write(0,*) "*                             *"
+    write(0,*) "==============================="
+>>>>>>> d470f7531d3f0763ef221797de343d5b82cb849a
+\end{lstlisting}
+
+This is actually the output of a \texttt{diff}, where \texttt{HEAD} refers to the content of Bob and \texttt{d470f7531d...} refers to the commit in the remote repository that we want to merge.
+
+In order to proceed, Bob have to modify the file \texttt{average\_plots.f90}, deciding which changes to take and which to discard (also removing the marks added by git. After editing, he decides to take a mix of both headers as follows,
+
+\begin{lstlisting}[style=AliceFake]
+ cp ../../DoneCode/average_plots_v2merged.f90 average_plots.f90
+\end{lstlisting}
+\begin{lstlisting}[style=Text]
+    write(0,*) "==============================="
+    write(0,*) "!                             !"
+    write(0,*) "!  P L O T    A V E R A G E   !"
+    write(0,*) "!                             !"
+    write(0,*) "==============================="
+    write(0,*) ""
+\end{lstlisting}
+
+This changes can now be committed and uploaded to the server
+
+\begin{lstlisting}[style=Bob]
+ git add average_plots.f90
+ git commit -m "Manually merge contributions to the header format"
+ git pull
+ git push
+\end{lstlisting}
+
+Finally, Alice pulls the repository from the server in order to retrieve the latest changes,
+
+\begin{lstlisting}[style=Alice]
+ git pull
+\end{lstlisting}
+
+At this point, both Alice and Bob have exactly the same repository.
+
+\clearpage
+
+\section{Using git info to identify versions and releases}
+Since git identifies each commit with a unique ID number, it can be useful to use such information to prepare a version tag in our program (so that one can easily find the version of the code used to generate a given output). There are different ways to retrieve such information, \texttt{git describe} and \texttt{git show}.
+
+In order to incorporate this information into our code, one can generate a file (\texttt{version.f90}) with a subroutine that prints the current version:
+
+\begin{lstlisting}[style=Text,escapechar=,]
+#/bin/bash
+git_hash=$(git describe --long --dirty --always)
+git_date=$(git show -s --format=%ci)
+cat <<EOF > version.f90
+    subroutine print_version()
+        write(0,'(/A)') "GIT VERSION INFO"
+        write(0,'(A)')   " Commit id  : $git_hash"
+        write(0,'(A)')   " Commit date: $git_date"
+        return
+    end subroutine 
+EOF
+\end{lstlisting}
+and then compile using such function in our code.
+
+Alice includes the above script to the project, and changes the code and the Makefile to properly handle the compilation with the \texttt{print\_version()} subroutine.
+
+\begin{lstlisting}[style=AliceFake]
+ cp ../../DoneCode/get_git_version.sh .
+ cp ../../DoneCode/Makefile3 Makefile
+ cp ../../DoneCode/average_plots_v4.f90 average_plots.f90
+\end{lstlisting}
+
+Since the file \texttt{version.f90} is updated at compilation time, it is much more convinient to keep it out of the repository and we add it to \texttt{.gitignore}:
+
+\begin{lstlisting}[style=Text,language=bash,commentstyle=\color{blue}]
+# Objects
+*.o
+
+# Binaries
+average_plots
+
+# Test dat file
+*.dat
+
+# Version track code
+version.f90
+\end{lstlisting}
+
+\begin{lstlisting}[style=Alice]
+ git add -A
+ git commit -m "Add version track"
+\end{lstlisting}
+
+Alice decides that the code is ready for releasing, and adds a tag to the repository with the version label
+
+\begin{lstlisting}[style=Alice]
+ git tag -a v1.0 -m "First release of the program"
+ git push 
+ git push --tags
+\end{lstlisting}
+(where tags need to be explicitly pushed with the \texttt{-{}-tags} flag).
+
+\clearpage
+
+\section{Exploring the repository}
+
+In order to get a summary of the files that are present in the working directory and their status in the repository, we can use,
+
+\begin{lstlisting}[style=Alice]
+ git status -s
+\end{lstlisting}
+which provides a summary of the files that are present in the folder, but still not added to the repository (either untracked, modified, added to the staging area...).
+
+The commits can be reviewed with,
+\begin{lstlisting}[style=Alice]
+ git log --decorate --graph --online
+\end{lstlisting}
+
+\begin{lstlisting}[style=Output,basicstyle=\small\ttfamily]
+* 4a1a0cc (HEAD -> master, tag: v1.0, cluster/master) Add version track
+*   abfbc51 Manually merge contributions to the header format
+|\  
+| * d470f75 Change header box format
+| *   80ac019 Merge branch 'master' of cluster.unial.it:/home/git/AveragePlots
+| |\  
+| * | be79f62 Add fancy header to the output of the program
+* | | 9bae438 Modify the aspect of the header
+| |/  
+|/|   
+* | f3cd0b3 Add 'make test' to Makefile at root folder
+|/  
+* 4338b46 Add test suite
+* 3b71b35 Add Makefile for compilation
+* d03de88 Starting repository with first version of the code
+\end{lstlisting}
+
+There are many graphical user interfaces (GUIs) that can provide nicer graphs (e.g., \texttt{gitg} or \texttt{gitk}).
+
+Note that, in general, since git includes all the information of the project, there are tools that allows one to look for a specific commit based on the commit message and even (powerful) tools able to find parts of the code. Moreover, one useful tool is \texttt{git blame <filename>} that allows one to know by who and when every line of the code was modified (so why can identify who to blame for a bug...).
+
+
+\clearpage
+
+\section{Coming back to old versions}
+
+It is possible to retrieve any old version, changing either the working directory, the repository (history) or both.
+
+Lets see the possibilities for Alice to come back to commit \texttt{b57143a} (\texttt{"Add inline documentation"}) from the history shown in the previous page:
+
+\subsection*{Change working directory}
+We first want to get the files in the working directory as they were in the commit, so that we can exactly check how the program worked at that stage). We need have to ensure that our current work has been committed (i.e., the working tree is clean, as controlled by \texttt{git status -suno}. We would need to \texttt{git commit} (or \texttt{git stash}) our changes, and then we can go to the commit with 
+\begin{lstlisting}[style=Alice]
+ git checkout b57143a
+\end{lstlisting}
+This action changes all tracked files to the status they had in commit \texttt{b57143a}. The untracked files are not touched. If we want to remove them as well, we type
+
+\begin{lstlisting}[style=Alice]
+ git clean -xn
+ git clean -xf
+\end{lstlisting}
+The the first call shows what is going to be deleted and the second deletes. \textbf{This action will completely removes untracked files!}.
+
+It is possible to return to the previous \texttt{HEAD} commit (i.e., \texttt{2e1b607}). Since it is the top of the branch named \texttt{master}, we can come back with,
+\begin{lstlisting}[style=Alice]
+ git checkout master
+\end{lstlisting}
+
+\subsection*{Change repository}
+If we want to put back the history at commit \texttt{b57143a} (i.e., place the top of the branch named \texttt{master} there) we can use,
+\begin{lstlisting}[style=Alice]
+ git reset b57143a
+\end{lstlisting}
+This will delete the commit info from \texttt{297ed0f} to \texttt{2e1b607}, but the working directory will look exactly as it was in \texttt{2e1b607}. That means that the differences will be identified by \texttt{git status -s} as modifications in the working tree (we can the decide whether \texttt{git add} all of some of them. I.e., we have not lost any work with this operation (only commit info).
+
+\subsection*{Change both}
+If we want to actually come back to commit \texttt{b57143a} as if all things done after had not happened (neither the work in our working directory nor the commits in the history), we can type:
+\begin{lstlisting}[style=Alice]
+ git reset b57143a --hard
+\end{lstlisting}
+
+\textbf{We will lose the work with no possible recovery!} We can also use \texttt{git clean} as before to have a pristine working tree.
+
+\clearpage
+
+\section{Closing remarks}
+
+In this tutorial we have introduce a basic workflow of git in the hope that one can adapt it to their needs and start using git in his projects. This guide is written in the hope that it can help a beginner to enter into the basic git usage, but the user is highly encouraged to read the vast amount of documentation that can be found online about git. A non exhaustive list of the limitation of this guide (or a list of what the reader should look for on the web) is,
+
+\begin{itemize}
+ \item Useful commands, namely \texttt{git stash}, are introduced with neither explanation nor example of usage.
+ \item The basics about history concepts (\texttt{HEAD, branch, remote}...) are not explained. Graphical schemes of the history usually helpful to introduce these concepts.
+ \item Some important topics are completely ignored (e.g. branching and more advanced history manipulations, e.g. \texttt{git rebase} and \texttt{git merge}, that are usually more  relevant when working with branches).
+ \item It is very likely that a reader will encounter many issues with a similar protocol (e.g., denied pulling, denied checkout...), that are usually related with untracked files being compromised. Git is normally quite conservative and does not make risky operations unless forced to do so.
+\end{itemize}
+
+
+\end{document}

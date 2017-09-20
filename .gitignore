@@ -1,0 +1,20 @@
+# Do not add the figures/ forder (review copyright)
+Presentation/figures/*
+Presentation/img/*
+
+# Do not add latex compilation files 
+*.snm 
+*.toc  
+*.out 
+*.nav
+*.aux
+*.log
+*.tex.backup
+*.pdf
+*.dvi
+
+# Do not add version code
+version.tex
+
+# Do not add zipfiles
+*.zip
