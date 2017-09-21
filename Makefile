@@ -1,7 +1,7 @@
 LANG="en_EN.UTF8"
 SHELL=/bin/bash
 
-dist:update_git_version compile_tutorial
+dist:compile_tutorial
 	zip GitIntro.zip Tutorial/HandsOut/DoneCode -r
 	zip GitIntro.zip Tutorial/HandsOut/Alice 
 	zip GitIntro.zip Tutorial/HandsOut/Bob
@@ -23,6 +23,6 @@ update_git_version:
 	@echo "==================================================="
 	@echo ""
 
-compile_tutorial:
+compile_tutorial:update_git_version
 	cd Tutorial; pdflatex git_example.tex
 
