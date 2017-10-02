@@ -209,7 +209,7 @@
  
  \pause
  
- In practice, we add a new layer to our folder organisation (actually 2 layers):
+ Let's go back to our working directory
  
  \begin{center}
  \includegraphics[width=6.5cm]{figures/gitless_world.png}\\
@@ -228,7 +228,7 @@
  \end{minipage}
  \vspace*{0.4cm}
  
- In practice, we add a new layer to our folder organisation (actually 2 layers):
+ Let's go back to our working directory, git adds a new layer (actually 2) 
  
  \begin{center}
  \includegraphics[width=6.5cm]{figures/git_world.png}\\
@@ -247,7 +247,7 @@
  \end{minipage}
  \vspace*{0.4cm}
  
- In practice, we add a new layer to our folder organisation (actually 2 layers):
+ Let's go back to our working directory, git adds a new layer (actually 2)
  
  \begin{center}
  \includegraphics[width=6.5cm]{figures/git_world.png}\\
@@ -263,7 +263,7 @@
   \vspace*{0.4cm}
  
  \begin{center}
- \includegraphics[width=6.5cm]{figures/move_on_git_world.png}
+ \includegraphics[width=5.5cm]{figures/git_3_states.png}
  \end{center}
  
 \end{frame}
@@ -277,31 +277,259 @@
   \vspace*{0.4cm}
  
  \begin{center}
- \includegraphics[width=6.5cm]{figures/move_on_git_world1.png}
+ \includegraphics[width=5.5cm]{figures/git_3_states_commands.png}
  \end{center}
  
 \end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\addtocounter{framenumber}{-1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 \begin{frame}
- \frametitle{What is git?}
- 
- Git is the set of tools that are used to manage such layers
-  \vspace*{0.4cm}
+ \frametitle{What is git? Example}
  
  \begin{center}
- \includegraphics[width=6.5cm]{figures/move_on_git_world2.png}
+  \includegraphics[width=7cm]{figures/git_step_1.png}
  \end{center}
+ \vspace*{-0.5cm}
  
+ \begin{itemize}
+  \item \texttt{vi test.dat}
+  \color{white}
+  \item[] \texttt{git add test.dat}
+  \item[] \texttt{git commit -m "Create my new file"}
+  \item[] \texttt{rm test.dat}
+  \item[] \texttt{git checkout test.dat}
+  \item[] \texttt{vi test.dat}
+  \item[] \texttt{git add test.dat}
+  \item[] \texttt{git commit -m "Update my file"}
+  \item[] \texttt{git checkout [1] test.dat}
+ \end{itemize}
+
+
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \addtocounter{framenumber}{-1}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
- \frametitle{What is git?}
+ \frametitle{What is git? Example}
  
- Git is the set of tools that are used to manage such layers
+ \begin{center}
+  \includegraphics[width=7cm]{figures/git_step_add.png}
+ \end{center}
+ \vspace*{-0.5cm}
+ 
+ \begin{itemize}
+  \color{gray}
+  \item[] \texttt{vi test.dat}
+  \color{black}
+  \item   \texttt{git add test.dat}
+  \color{white}
+  \item[] \texttt{git commit -m "Create my new file"}
+  \item[] \texttt{rm test.dat}
+  \item[] \texttt{git checkout test.dat}
+  \item[] \texttt{vi test.dat}
+  \item[] \texttt{git add test.dat}
+  \item[] \texttt{git commit -m "Update my file"}
+  \item[] \texttt{git checkout [1] test.dat}
+ \end{itemize}
+
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addtocounter{framenumber}{-1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{What is git? Example}
+ 
+ \begin{center}
+  \includegraphics[width=7cm]{figures/git_step_commit.png}
+ \end{center}
+ \vspace*{-0.5cm}
+ 
+ \begin{itemize}
+  \color{gray}
+  \item[] \texttt{vi test.dat}
+  \item[] \texttt{git add test.dat}
+  \color{black}
+  \item   \texttt{git commit -m "Create my new file"}
+  \color{white}
+  \item[] \texttt{rm test.dat}
+  \item[] \texttt{git checkout test.dat}
+  \item[] \texttt{vi test.dat}
+  \item[] \texttt{git add test.dat}
+  \item[] \texttt{git commit -m "Update my file"}
+  \item[] \texttt{git checkout [1] test.dat}
+ \end{itemize}
+
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addtocounter{framenumber}{-1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{What is git? Example}
+ 
+ \begin{center}
+  \includegraphics[width=7cm]{figures/git_step_delwd.png}
+ \end{center}
+ \vspace*{-0.5cm}
+ 
+ \begin{itemize}
+  \color{gray}
+  \item[] \texttt{vi test.dat}
+  \item[] \texttt{git add test.dat}
+  \item[] \texttt{git commit -m "Create my new file"}
+  \color{black}
+  \item   \texttt{rm test.dat}
+  \color{white}
+  \item[] \texttt{git checkout test.dat}
+  \item[] \texttt{vi test.dat}
+  \item[] \texttt{git add test.dat}
+  \item[] \texttt{git commit -m "Update my file"}
+  \item[] \texttt{git checkout [1] test.dat}
+ \end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addtocounter{framenumber}{-1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{What is git? Example}
+ 
+ \begin{center}
+  \includegraphics[width=7cm]{figures/git_step_checkout.png}
+ \end{center}
+ \vspace*{-0.5cm}
+ 
+ \begin{itemize}
+  \color{gray}
+  \item[] \texttt{vi test.dat}
+  \item[] \texttt{git add test.dat}
+  \item[] \texttt{git commit -m "Create my new file"}
+  \item[] \texttt{rm test.dat}
+  \color{black}
+  \item   \texttt{git checkout test.dat}
+  \color{white}
+  \item[] \texttt{vi test.dat}
+  \item[] \texttt{git add test.dat}
+  \item[] \texttt{git commit -m "Update my file"}
+  \item[] \texttt{git checkout [1] test.dat}
+ \end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addtocounter{framenumber}{-1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{What is git? Example}
+ 
+ \begin{center}
+  \includegraphics[width=7cm]{figures/git_step_2.png}
+ \end{center}
+ \vspace*{-0.5cm}
+ 
+ \begin{itemize}
+  \color{gray}
+  \item[] \texttt{vi test.dat}
+  \item[] \texttt{git add test.dat}
+  \item[] \texttt{git commit -m "Create my new file"}
+  \item[] \texttt{rm test.dat}
+  \item[] \texttt{git checkout test.dat}
+  \color{black}
+  \item   \texttt{vi test.dat}
+  \color{white}
+  \item[] \texttt{git add test.dat}
+  \item[] \texttt{git commit -m "Update my file"}
+  \item[] \texttt{git checkout [1] test.dat}
+ \end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addtocounter{framenumber}{-1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{What is git? Example}
+ 
+ \begin{center}
+  \includegraphics[width=7cm]{figures/git_step_add2.png}
+ \end{center}
+ \vspace*{-0.5cm}
+ 
+ \begin{itemize}
+  \color{gray}
+  \item[] \texttt{vi test.dat}
+  \item[] \texttt{git add test.dat}
+  \item[] \texttt{git commit -m "Create my new file"}
+  \item[] \texttt{rm test.dat}
+  \item[] \texttt{git checkout test.dat}
+  \item[] \texttt{vi test.dat}
+  \color{black}
+  \item   \texttt{git add test.dat}
+  \color{white}
+  \item[] \texttt{git commit -m "Update my file"}
+  \item[] \texttt{git checkout [1] test.dat}
+ \end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addtocounter{framenumber}{-1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{What is git? Example}
+ 
+ \begin{center}
+  \includegraphics[width=7cm]{figures/git_step_commit2.png}
+ \end{center}
+ \vspace*{-0.5cm}
+ 
+ \begin{itemize}
+  \color{gray}
+  \item[] \texttt{vi test.dat}
+  \item[] \texttt{git add test.dat}
+  \item[] \texttt{git commit -m "Create my new file"}
+  \item[] \texttt{rm test.dat}
+  \item[] \texttt{git checkout test.dat}
+  \item[] \texttt{vi test.dat}
+  \item[] \texttt{git add test.dat}
+  \color{black}
+  \item   \texttt{git commit -m "Update my file"}
+  \color{white}
+  \item[] \texttt{git checkout [1] test.dat}
+ \end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addtocounter{framenumber}{-1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{What is git? Example}
+ 
+ \begin{center}
+  \includegraphics[width=7cm]{figures/git_step_checkout2.png}
+ \end{center}
+ \vspace*{-0.5cm}
+ 
+ \begin{itemize}
+  \color{gray}
+  \item[] \texttt{vi test.dat}
+  \item[] \texttt{git add test.dat}
+  \item[] \texttt{git commit -m "Create my new file"}
+  \item[] \texttt{rm test.dat}
+  \item[] \texttt{git checkout test.dat}
+  \item[] \texttt{vi test.dat}
+  \item[] \texttt{git add test.dat}
+  \item[] \texttt{git commit -m "Update my file"}
+  \color{black}
+  \item   \texttt{git checkout [1] test.dat}
+  \color{white}
+ \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+ \frametitle{What is git? Whole scheme}
+ 
+ Tools also exist to manage repositories in remote servers
   \vspace*{0.4cm}
  
  \begin{center}
@@ -348,6 +576,8 @@
 \begin{frame}
  \frametitle{Basic workflow}
  
+ \textbf{Steps to follow to track changes on a file}
+ 
  \begin{enumerate}
   \item Make changes to the code  (\texttt{mycode.f90})
   \vspace*{0.2cm}
@@ -379,6 +609,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
  \frametitle{Basic workflow}
+ 
+ \textbf{Steps to follow to track changes on a file}
  
  \begin{enumerate}
   \item Make changes to the code (\texttt{mycode.f90})
@@ -414,23 +646,21 @@
 
 
 \begin{frame}
- \frametitle{Regarding history (with only 1 branch)}
+ \frametitle{History of the repository (with only 1 branch)}
  
  \begin{itemize}
   \item All objects (commits) in git have associated a unique ID (hash), e.g. \texttt{d6cd1e2bd19e03a81132a23b2025920577f84e37}
   \vspace*{0.2cm}
   
-  \item Changes in history should be avoided, even more in collaborative projects
-  \vspace*{0.2cm}
-  
   \item The history can be examined with:
-  
+
   \texttt{git log -{}-oneline -{}-decorate -{}-graph} (or with gui as \texttt{gitg}) 
   \begin{center}
    \includegraphics[width=11cm]{figures/log.png}
   \end{center}
+    \vspace*{0.2cm}
 
-  
+   \item Changes in history should be avoided, even more in collaborative projects
   
  \end{itemize}
 
@@ -474,40 +704,44 @@
 
 
 \begin{frame}
+\setbeamercovered{transparent}
  \frametitle{Configuration and remote servers}
  
  \begin{itemize}
-  \item Git identifies users by name and e-mail
+  \item<1> Git identifies users by name and e-mail
   
   \texttt{git config -{}-global user.email "john@uni.edu"}
   
   \texttt{git config -{}-global user.name "John Doe"}
-  \vspace*{0.3cm}
-  
-  \item Starting a repository
+  \vspace*{0.2cm}
+
+  \item<2> Starting a repository
   
   \texttt{git init} (on a local machine)
   
   \texttt{git init -{}-bare -{}-shared} (on a remote server)
-  \vspace*{0.3cm}
+  \vspace*{0.2cm}
+  
+  \item<3,6> Setting a remote server with protocols: local, ssh, http (no further config)
+  
+  \texttt{git remote add {\color{blue}local} file:///home/john/Repos/MyWork.git}
   
   \begin{minipage}{1.1\textwidth}
-  \item Accessing a remote server with protocols: local, ssh, http (no further config)
-  
   \texttt{git remote add {\color{blue}cluster} ssh://john@cluster:\textasciitilde/Repos/MyWork.git}
-  
-  \texttt{git remote add {\color{blue}github} https://github.com/john/MyWork.git}
   \end{minipage}
-  \vspace*{0.3cm}
+
+  \alert<6>{
+\texttt{git remote add {\color{blue}github} https://github.com/john/MyWork.git}}
+  \vspace*{0.2cm}
   
-  \item Sending/getting commit history to/from remote
+  \item<4> Sending/getting commit history to/from remote
   
   \texttt{git push {\color{blue}cluster}} (send)
   
   \texttt{git pull {\color{blue}cluster}} (receive)
-  \vspace*{0.3cm}
+  \vspace*{0.2cm}
   
-  \item Clone from a remote repository
+  \item<5> Clone from a remote repository
   
   \texttt{git clone john@cluster:\textasciitilde/Repos/MyWork.git}
   
