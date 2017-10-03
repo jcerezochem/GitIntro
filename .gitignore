@@ -12,6 +12,7 @@ Presentation/img/*
 *.tex.backup
 *.pdf
 *.dvi
+*.vrb
 
 # Do not add version code
 version.tex

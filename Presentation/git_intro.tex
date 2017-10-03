@@ -77,6 +77,21 @@
 \usepackage{color}
 \usepackage{colortbl}
 
+\usepackage{listings}
+\lstdefinestyle{Output}{
+%   language=bash,
+%   firstline=2,% Supress the first line that begins with `%`
+  escapechar=\%,
+  basicstyle=\small\ttfamily,
+  numbers=none,
+  numberstyle=\tiny,
+  numbersep=3pt,
+  frame=tb,
+  columns=fullflexible,
+  backgroundcolor=\color{white},
+  linewidth=0.9\linewidth,
+  xleftmargin=0.1\linewidth
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %DEFINICIONES DE COLORES
@@ -131,9 +146,9 @@
 % Definir opciones: tema, título, fecha, etc
 \title[Intro to git]{\textbf{Short introduction to git}}
 % \subtitle{\vspace*{-0.2cm} An {\itshape express} introduction to GROMACS}
-\author{Javier Cerezo Bastida}
+\author{Javier Cerezo}
 \institute{}
-\date{Javier Cerezo Bastida\\\vspace*{0.2cm}\today} %September 2017}
+\date{Javier Cerezo\\\vspace*{0.2cm}\today} %September 2017}
 \tema{}
 
 \setbeamertemplate{section in toc}[circle]
@@ -209,7 +224,7 @@
  
  \pause
  
- Let's go back to our working directory
+ Let's go back to our working directory{\color{white}, git adds a new layer (actually 2)}
  
  \begin{center}
  \includegraphics[width=6.5cm]{figures/gitless_world.png}\\
@@ -282,7 +297,38 @@
  
 \end{frame}
 
+%=============================================
+%
+% Slides with steps in git with Example
+%
+%=============================================
+\begin{frame}
+ \frametitle{What is git? Example}
+ 
+ \begin{center}
+  \includegraphics[width=7cm]{figures/git_step_0.png}
+ \end{center}
+ \vspace*{-0.5cm}
+ 
+ \begin{itemize}
+  \color{white}
+  \item[] \texttt{vi test.dat}
+  \item[] \texttt{git init}
+  \item[] \texttt{git add test.dat}
+  \item[] \texttt{git commit -m "Create my new file"}
+  \item[] \texttt{rm test.dat}
+  \item[] \texttt{git checkout test.dat}
+  \item[] \texttt{vi test.dat}
+  \item[] \texttt{git add test.dat}
+  \item[] \texttt{git commit -m "Update my file"}
+  \item[] \texttt{git checkout [1] test.dat}
+ \end{itemize}
 
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addtocounter{framenumber}{-1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
  \frametitle{What is git? Example}
  
@@ -292,7 +338,39 @@
  \vspace*{-0.5cm}
  
  \begin{itemize}
-  \item \texttt{vi test.dat}
+  \color{gray}
+  \color{black}
+  \item   \texttt{vi test.dat}
+  \color{white}
+  \item[] \texttt{git init}
+  \item[] \texttt{git add test.dat}
+  \item[] \texttt{git commit -m "Create my new file"}
+  \item[] \texttt{rm test.dat}
+  \item[] \texttt{git checkout test.dat}
+  \item[] \texttt{vi test.dat}
+  \item[] \texttt{git add test.dat}
+  \item[] \texttt{git commit -m "Update my file"}
+  \item[] \texttt{git checkout [1] test.dat}
+ \end{itemize}
+
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\addtocounter{framenumber}{-1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+ \frametitle{What is git? Example}
+ 
+ \begin{center}
+  \includegraphics[width=7cm]{figures/git_step_init.png}
+ \end{center}
+ \vspace*{-0.5cm}
+ 
+ \begin{itemize}
+  \color{gray}
+  \item[] \texttt{vi test.dat}
+  \color{black}
+  \item   \texttt{git init}
   \color{white}
   \item[] \texttt{git add test.dat}
   \item[] \texttt{git commit -m "Create my new file"}
@@ -320,6 +398,7 @@
  \begin{itemize}
   \color{gray}
   \item[] \texttt{vi test.dat}
+  \item[] \texttt{git init}
   \color{black}
   \item   \texttt{git add test.dat}
   \color{white}
@@ -348,6 +427,7 @@
  \begin{itemize}
   \color{gray}
   \item[] \texttt{vi test.dat}
+  \item[] \texttt{git init}
   \item[] \texttt{git add test.dat}
   \color{black}
   \item   \texttt{git commit -m "Create my new file"}
@@ -376,6 +456,7 @@
  \begin{itemize}
   \color{gray}
   \item[] \texttt{vi test.dat}
+  \item[] \texttt{git init}
   \item[] \texttt{git add test.dat}
   \item[] \texttt{git commit -m "Create my new file"}
   \color{black}
@@ -403,6 +484,7 @@
  \begin{itemize}
   \color{gray}
   \item[] \texttt{vi test.dat}
+  \item[] \texttt{git init}
   \item[] \texttt{git add test.dat}
   \item[] \texttt{git commit -m "Create my new file"}
   \item[] \texttt{rm test.dat}
@@ -430,6 +512,7 @@
  \begin{itemize}
   \color{gray}
   \item[] \texttt{vi test.dat}
+  \item[] \texttt{git init}
   \item[] \texttt{git add test.dat}
   \item[] \texttt{git commit -m "Create my new file"}
   \item[] \texttt{rm test.dat}
@@ -457,6 +540,7 @@
  \begin{itemize}
   \color{gray}
   \item[] \texttt{vi test.dat}
+  \item[] \texttt{git init}
   \item[] \texttt{git add test.dat}
   \item[] \texttt{git commit -m "Create my new file"}
   \item[] \texttt{rm test.dat}
@@ -484,6 +568,7 @@
  \begin{itemize}
   \color{gray}
   \item[] \texttt{vi test.dat}
+  \item[] \texttt{git init}
   \item[] \texttt{git add test.dat}
   \item[] \texttt{git commit -m "Create my new file"}
   \item[] \texttt{rm test.dat}
@@ -511,6 +596,7 @@
  \begin{itemize}
   \color{gray}
   \item[] \texttt{vi test.dat}
+  \item[] \texttt{git init}
   \item[] \texttt{git add test.dat}
   \item[] \texttt{git commit -m "Create my new file"}
   \item[] \texttt{rm test.dat}
@@ -525,11 +611,34 @@
 
 \end{frame}
 
+\begin{frame}[fragile]
+ \frametitle{What is git? States of a file w.r.t. git}
+ 
+ \texttt{git status -s}
+ 
+ \begin{lstlisting}[style=Output]
+%{\color{green}A\ }% stagged_first_time.dat
+%{\color{green}M\ }% tracked_with_stagged_changes.dat 
+%{\color{red}\ M}% tracked_with_unstagged_changes.dat 
+%{\color{red}??}% untracked.dat
+\end{lstlisting}
+\vspace*{0.3cm}
+
+Rest of files are tracked but not changed. 
+\vspace*{0.2cm}
+
+Or ignored with \texttt{.gitignore} file: list all untracked files that should be ignored by git
+\vspace*{0.6cm}
+
+Only tracked files are in the repository. Can be listed with \texttt{git ls-files} or using a gui (like gitk or gitg)
+ 
+\end{frame}
+
 
 \begin{frame}
  \frametitle{What is git? Whole scheme}
  
- Tools also exist to manage repositories in remote servers
+ Tools also exist to communicate with repositories in remote servers
   \vspace*{0.4cm}
  
  \begin{center}
@@ -576,7 +685,8 @@
 \begin{frame}
  \frametitle{Basic workflow}
  
- \textbf{Steps to follow to track changes on a file}
+ \textbf{Steps to follow to track changes on a file} \onslide<2->{\color{red}(with remotes)}
+ \vspace*{0.5cm}
  
  \begin{enumerate}
   \item Make changes to the code  (\texttt{mycode.f90})
@@ -591,6 +701,8 @@
   
   \texttt{git commit -m "Bug X was fixed"}
   \vspace*{0.2cm}
+  
+  \pause
   
   \item Add them to the remote repository:
   
@@ -610,7 +722,8 @@
 \begin{frame}
  \frametitle{Basic workflow}
  
- \textbf{Steps to follow to track changes on a file}
+ \textbf{Steps to follow to track changes on a file} \onslide<1->{\color{red}(with remotes)}
+ \vspace*{0.5cm}
  
  \begin{enumerate}
   \item Make changes to the code (\texttt{mycode.f90})
@@ -705,7 +818,7 @@
 
 \begin{frame}
 \setbeamercovered{transparent}
- \frametitle{Configuration and remote servers}
+ \frametitle{Configure local and remote servers}
  
  \begin{itemize}
   \item<1> Git identifies users by name and e-mail
@@ -724,10 +837,13 @@
   
   \item<3,6> Setting a remote server with protocols: local, ssh, http (no further config)
   
-  \texttt{git remote add {\color{blue}local} file:///home/john/Repos/MyWork.git}
+  \only<6->{\color{black!20!White}}
+  \only<1-5>{\texttt{git remote add {\color{blue}local} file:///home/john/Repos/MyWork.git}}
+  \only<6->{\texttt{git remote add local file:///home/john/Repos/MyWork.git}}
   
   \begin{minipage}{1.1\textwidth}
-  \texttt{git remote add {\color{blue}cluster} ssh://john@cluster:\textasciitilde/Repos/MyWork.git}
+  \only<1-5>{\texttt{git remote add {\color{blue}cluster} ssh://john@cluster:\textasciitilde/Repos/MyWork.git}}
+  \only<6->{\texttt{git remote add cluster ssh://john@cluster:\textasciitilde/Repos/MyWork.git}}
   \end{minipage}
 
   \alert<6>{
