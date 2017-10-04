@@ -190,8 +190,7 @@
  \begin{center}
  \includegraphics[width=6cm]{figures/why_git.png}  
  \end{center}
- 
- \pause
+
  
  If the above folder organisation is not unfamiliar to you and/or:
  
@@ -685,7 +684,7 @@ Only tracked files are in the repository. Can be listed with \texttt{git ls-file
 \begin{frame}
  \frametitle{Basic workflow}
  
- \textbf{Steps to follow to track changes on a file} \onslide<2->{\color{red}(with remotes)}
+ \textbf{Inserting git in our development protocol} \onslide<2->{\color{red}(with remotes)}
  \vspace*{0.5cm}
  
  \begin{enumerate}
@@ -722,7 +721,7 @@ Only tracked files are in the repository. Can be listed with \texttt{git ls-file
 \begin{frame}
  \frametitle{Basic workflow}
  
- \textbf{Steps to follow to track changes on a file} \onslide<1->{\color{red}(with remotes)}
+ \textbf{Inserting git in our development protocol} \onslide<1->{\color{red}(with remotes)}
  \vspace*{0.5cm}
  
  \begin{enumerate}
@@ -837,7 +836,7 @@ Only tracked files are in the repository. Can be listed with \texttt{git ls-file
   
   \item<3,6> Setting a remote server with protocols: local, ssh, http (no further config)
   
-  \only<6->{\color{black!20!White}}
+  \only<6->{\color{black!20!white}}
   \only<1-5>{\texttt{git remote add {\color{blue}local} file:///home/john/Repos/MyWork.git}}
   \only<6->{\texttt{git remote add local file:///home/john/Repos/MyWork.git}}
   
@@ -891,10 +890,83 @@ Only tracked files are in the repository. Can be listed with \texttt{git ls-file
   
  \end{itemize}
  
+ Other web services available: e.g. bitbucket
+ \vspace*{0.2cm}
+ 
  Similar GUI can be mounted on a cluster: gitlab and gogs
 
  
 \end{frame}
+
+\begin{frame}
+ \frametitle{Introduction to branches}
+ 
+ \begin{itemize}  
+  \item \textbf{Why using branches?}\\
+  Allow to work independently on an specific feature of the project\\
+  (useful, but depends on the development workflow)
+ \end{itemize}
+ 
+ \begin{itemize}
+ \small
+  \item Working with a remote we are actually using a branch (\texttt{remote/master})!
+ \end{itemize}
+ 
+ \only<1>{\hspace*{1cm}\includegraphics[width=6cm]{figures/branching_0.png}}
+ \only<2>{\hspace*{1cm}\includegraphics[width=6cm]{figures/branching_1.png}}
+ \only<3>{\hspace*{1cm}\includegraphics[width=6cm]{figures/branching_final.png}}
+ \only<4>{\hspace*{1cm}\includegraphics[width=6cm]{figures/branching_wanamerge.png}}
+ 
+ 
+ \begin{itemize}
+  \item \only<2>{\texttt{git checkout -b Feature}}
+        \only<3->{{\color{black!20!White}\texttt{git checkout -b Feature}}}
+  \vspace*{0.1cm}
+  
+  \item<3-> \only<1-2>{.}\only<3>{(commits on both branches)}\only<4->{{\color{black!20!White}(commits on both branches)}}
+  \vspace*{0.1cm}
+  
+  \item<4-> \textbf{Export work made on both branches}: \texttt{git merge} or \texttt{git rebase}
+ \end{itemize}
+
+
+
+ 
+ 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Introduction to branches}
+
+ 
+ \only<1-2>{\texttt{git merge Master} (from \texttt{Feature})}
+ \only<3->{{\color{black!20!white}\texttt{git merge Master} (from \texttt{Feature})}}
+ \vspace*{-0.6cm}
+ 
+ \only<1>{\noindent\hspace*{1cm}\includegraphics[width=6cm]{figures/branchingB.png}}
+ \only<2>{\noindent\hspace*{1cm}\includegraphics[width=6cm]{figures/branchingB_merge.png}}
+ \only<3->{\noindent\hspace*{1cm}\includegraphics[width=6cm]{figures/branchingB_mergeFadeOut.png}}
+ 
+ \vspace*{0.0cm}
+ 
+ \pause
+ \phantom{.}
+ \pause
+ 
+ \vspace*{-0.3cm}
+ 
+ \only<1-4>{\texttt{git rebase Master} (from \texttt{Feature})}
+ \only<5->{{\color{black!20!white}\texttt{git rebase Master} (from \texttt{Feature})}}
+ \vspace*{-0.6cm}
+ 
+ \only<1-3>{\noindent\hspace*{1cm}\includegraphics[width=6cm]{figures/branchingB.png}}
+ \only<4>{\noindent\hspace*{1cm}\includegraphics[width=6cm]{figures/branchingB_rebase.png}}
+ \only<5->{\noindent\hspace*{1cm}\includegraphics[width=6cm]{figures/branchingB_rebaseFadeOut.png}}
+
+ \onslide<5->{Switch between branches: \texttt{git checkout <branchname>}}
+
+ \end{frame}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \addtocounter{framenumber}{-1}
