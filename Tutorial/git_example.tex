@@ -444,7 +444,7 @@ Alice commit her changes and upload to the server
 \end{lstlisting}
 (note that \texttt{git commit -a} is a shortcut of \texttt{git add -u} + \texttt{git commit -m "..."})
 
-Now Bob commit and tries to pull the history from the remote,
+Now Bob commits and tries to pull the history from the remote,
 
 \begin{lstlisting}[style=Bob]
  git commit -a -m "Modify the aspect of the header"
@@ -514,7 +514,7 @@ At this point, both Alice and Bob have exactly the same repository.
 \section{Using git info to identify versions and releases}
 Since git identifies each commit with a unique ID number, it can be useful to use such information to prepare a version tag in our program (so that one can easily find the version of the code used to generate a given output). There are different ways to retrieve such information, \texttt{git describe} and \texttt{git show}.
 
-In order to incorporate this information into our code, one can generate a file (\texttt{version.f90}) with a subroutine that prints the current version:
+In order to incorporate this information into our code, one can generate a file (\texttt{version.f90}) with a subroutine that prints the current version. This generation can be automatized within a script:
 
 \begin{lstlisting}[style=Text,escapechar=,]
 #/bin/bash
@@ -531,7 +531,7 @@ EOF
 \end{lstlisting}
 and then compile using such function in our code.
 
-Alice includes the above script to the project, and changes the code and the Makefile to properly handle the compilation with the \texttt{print\_version()} subroutine.
+Alice includes the above script to the project, changing the code and Makefile to properly handle the compilation with the \texttt{print\_version()} subroutine.
 
 \begin{lstlisting}[style=AliceFake]
  cp ../../DoneCode/get_git_version.sh .
@@ -627,7 +627,7 @@ This action changes all tracked files to the status they had in commit \texttt{b
  git clean -xn
  git clean -xf
 \end{lstlisting}
-The the first call shows what is going to be deleted and the second deletes. \textbf{This action will completely removes untracked files!}.
+The the first call shows what is going to be deleted and the second deletes. \textbf{This action will completely remove untracked files!}.
 
 It is possible to return to the previous \texttt{HEAD} commit (i.e., \texttt{2e1b607}). Since it is the top of the branch named \texttt{master}, we can come back with,
 \begin{lstlisting}[style=Alice]
