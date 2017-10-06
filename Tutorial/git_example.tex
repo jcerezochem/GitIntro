@@ -372,12 +372,12 @@ At the same time, Alice has been working on the code, adding a header to the pro
  cd commit -m "Add fancy header to the output of the program"
 \end{lstlisting}
 
-At this point, the history of Alice and Bob diverge. Moreover, since Bob committed before Alice, also Alice has a history that differs from the remote one, so she cannot push now and when pulling, this situation needs to be fixed. Fortunately, git can handle automatically most of this issues. In the case, for instance, Alice and Bob did the changes in different files and there is no conflict between their commits. When typing \texttt{git pull}, git downloads the repository from the remote folder, merges it with our local one and generates a commit,
+At this point, the history of Alice and Bob diverge. Moreover, since Bob committed before Alice, also Alice has a history that differs from the remote one, so she cannot push now and when pulling, this situation needs to be fixed. Fortunately, git can handle automatically most of this issues. In this case, for instance, Alice and Bob did the changes in different files and there is no conflict between their commits. When typing \texttt{git pull}, git downloads the repository from the remote folder, merges it with our local one and generates a commit,
 
 \begin{lstlisting}[style=Alice]
  git pull
 \end{lstlisting}
-Since git is creating a commit, it launches the text editor as usual, inserting a default commit message:
+Since git is creating a commit, it launches the text editor as usual, inserting a default commit message (that we can edit if necessary):
 
 \begin{lstlisting}[style=Text,language=bash,commentstyle=\color{blue},linewidth=1.06\linewidth,xleftmargin=0.05\linewidth]
 %{\color{red!50!yellow!90!}Merge branch 'master' of cluster.unial.it:/home/git/AveragePlots}%
@@ -450,7 +450,7 @@ Now Bob commits and tries to pull the history from the remote,
  git commit -a -m "Modify the aspect of the header"
  git pull
 \end{lstlisting}
-and gets the following error:
+and gets the following warning:
 
 \begin{lstlisting}[style=Output]
 Auto-merging average_plots.f90
@@ -478,7 +478,7 @@ Moreover, git has added some marks to the file \texttt{average\_plots.f90} in th
 
 This is actually the output of a \texttt{diff}, where \texttt{HEAD} refers to the content of Bob and \texttt{d470f7531d...} refers to the commit in the remote repository that we want to merge.
 
-In order to proceed, Bob have to modify the file \texttt{average\_plots.f90}, deciding which changes to take and which to discard (also removing the marks added by git. After editing, he decides to take a mix of both headers as follows,
+In order to proceed, Bob has to modify the file \texttt{average\_plots.f90}, deciding which changes to take and which to discard (also removing the marks added by git. After editing, he decides to take a mix of both headers as follows,
 
 \begin{lstlisting}[style=AliceFake]
  cp ../../DoneCode/average_plots_v2merged.f90 average_plots.f90
@@ -696,7 +696,7 @@ But Alice really want to change the commit, so she makes a forced push with
 \begin{lstlisting}[style=Alice]
  git push -f
 \end{lstlisting}
-\textbf{what is one of the worst ideas in a collaborative project}. At this moment, Bob has a a history that is has a different commit with respect to the one in the repository. If he now pulls again, things can be solved, otherwise, if Alice continue to push other commits, they may end up in incompatible repositories. The take home message is that \textbf{one should avoid changing the history that has already been pushed}.
+\textbf{what is one of the worst ideas in a collaborative project}. At this moment, Bob has a a history that has a different commit with respect to the one in the repository. If he now pulls again, things can be solved, otherwise, if Alice continue to push other commits, they may end up in incompatible repositories. The take home message is that \textbf{one should avoid changing the history that has already been pushed}.
 
 In any case, sometimes, we are working locally and we need to change commits further than the last one. In this case, we can use the following command:
 
@@ -709,7 +709,7 @@ which launches an interactive mode that allows us to modify the last 3 commits.
 
 \section{Closing remarks}
 
-In this tutorial we have introduce a basic workflow of git so taht one can adapt it to their needs and start using git in his projects. This guide is written in the hope that it can help a beginner to enter into the basic git usage, but the user is highly encouraged to read the vast amount of documentation that can be found online about git. A non exhaustive list of the limitation of this guide (or a list of what the reader should (urgently) look for in the web) is,
+In this tutorial we have introduce a basic workflow of git so that one can adapt it to his needs and start using git in his projects. This guide is written in the hope that it can help a beginner to enter into the basic git usage, but the user is highly encouraged to read the vast amount of documentation that can be found online about git. A non exhaustive list of the limitation of this guide (or a list of what the reader should (urgently) look for in the web) is,
 
 \begin{itemize}
  \item Useful commands, namely \texttt{git stash}, are introduced with neither explanation nor example of usage.
@@ -719,7 +719,7 @@ In this tutorial we have introduce a basic workflow of git so taht one can adapt
 \end{itemize}
 \vspace*{0.5cm}
 
-Some interesing references to continue:
+Some interesing references to continue are:
 \begin{itemize}
  \item[-] Pro Git book: https://git-scm.com/book/en/v2
  \item[-] Tutorials: https://www.atlassian.com/git/tutorials
